@@ -104,7 +104,7 @@ public class PatientService implements IPatientService {
         if(patient == null) throw new Exception("Patient not found!");
 
         this.patientRepository.deleteById(id);
-        this.appUserService.delete(patient.getEngagedParty().getUserId());
+        this.appUserService.delete(patient.getEngagedEntity().getUserId());
     }
 
     private boolean ucnExists(String ucn) {

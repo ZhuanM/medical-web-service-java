@@ -39,7 +39,7 @@ public class DoctorService implements IDoctorService {
                 "http://localhost:8080/user" + "/" + user.getId()
         );
         Set<Specialization> specialities = new LinkedHashSet<>();
-        specialities.add(doctorDTO.getSpecialty());
+        specialities.add(doctorDTO.getSpecialization());
         Doctor doctor = new Doctor(
                 doctorDTO.getNPI(),
                 en,
@@ -77,15 +77,15 @@ public class DoctorService implements IDoctorService {
             doctor.setName(payload.getName());
         }
 
-        if(payload.getSpecialities() != null) {
-            for (Specialization specialization : payload.getSpecialities()) {
+        if(payload.getSpecializations() != null) {
+            for (Specialization specialization : payload.getSpecializations()) {
                 try {
                     Specialization.valueOf(specialization.toString());
                 } catch (Exception e) {
                     throw new Exception("One of the specialities is incorrect");
                 }
             }
-            doctor.setSpecialities(payload.getSpecialities());
+            doctor.setSpecializations(payload.getSpecializations());
         }
 
         return this.doctorRepository.save(doctor);
@@ -98,7 +98,7 @@ public class DoctorService implements IDoctorService {
         if(doctor == null) throw new Exception("Patient not found!");
 
         this.doctorRepository.deleteById(doctorId);
-        this.appUserService.delete(doctor.getEngagedParty().getUserId());
+        this.appUserService.delete(doctor.getEngagedEntity().getUserId());
     }
 
     private boolean npiExists(String ucn) {

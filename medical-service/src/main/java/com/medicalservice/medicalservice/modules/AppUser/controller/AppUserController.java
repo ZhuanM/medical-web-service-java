@@ -32,7 +32,7 @@ public class AppUserController {
         }
         catch (Exception exc) {
             CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, exc.getLocalizedMessage());
-            return new ResponseEntity<>(error, error.getStatus());
+            return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
 }

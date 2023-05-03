@@ -25,7 +25,7 @@ public class DoctorController {
         }
         catch (Exception exc) {
             CustomResponseError error = new CustomResponseError(HttpStatus.INTERNAL_SERVER_ERROR, exc.getLocalizedMessage());
-            return new ResponseEntity<>(error, error.getStatus());
+            return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
 
@@ -43,7 +43,7 @@ public class DoctorController {
         }
         catch (Exception exc) {
             CustomResponseError error = new CustomResponseError(HttpStatus.INTERNAL_SERVER_ERROR, exc.getLocalizedMessage());
-            return new ResponseEntity<>(error, error.getStatus());
+            return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
 
@@ -55,7 +55,7 @@ public class DoctorController {
         }
         catch (Exception exc) {
             CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, exc.getMessage());
-            return new ResponseEntity<>(error, error.getStatus());
+            return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
 
@@ -68,7 +68,7 @@ public class DoctorController {
         }
         catch (Exception exc) {
             CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, exc.getLocalizedMessage());
-            return new ResponseEntity<>(error, error.getStatus());
+            return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
 
@@ -80,7 +80,7 @@ public class DoctorController {
         }
         catch (Exception exc) {
             CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, exc.getLocalizedMessage());
-            return new ResponseEntity<>(error, error.getStatus());
+            return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
 }
