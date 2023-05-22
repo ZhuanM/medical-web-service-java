@@ -11,48 +11,43 @@ import java.util.List;
 @NoArgsConstructor
 public class VisitsCreateDTO {
     private EngagedEntity patient;
-
     private EngagedEntity doctor;
-
     private String diagnosis;
-
     private String date;
-
-    private List<Treatment> medicaments;
-
+    private List<Treatment> treatments;
     private SickLeave sickLeave;
 
-    public VisitsCreateDTO(EngagedEntity patient, EngagedEntity doctor, String diagnosis, List<Treatment> medicaments, SickLeave sickLeave) {
-        this.patient = patient;
+    public VisitsCreateDTO(EngagedEntity patient, EngagedEntity doctor, String diagnosis, List<Treatment> treatments, SickLeave sickLeave) {
         this.doctor = doctor;
+        this.patient = patient;
         this.diagnosis = diagnosis;
-        this.medicaments = medicaments;
+        this.treatments = treatments;
         this.sickLeave = sickLeave;
     }
 
     public VisitsCreateDTO(EngagedEntity patient, EngagedEntity doctor, String diagnosis) {
-        this.patient = patient;
         this.doctor = doctor;
+        this.patient = patient;
         this.diagnosis = diagnosis;
-        this.medicaments = new ArrayList<>();
+        this.treatments = new ArrayList<>();
         this.sickLeave = null;
     }
 
     public VisitsCreateDTO(String date, EngagedEntity patient, EngagedEntity doctor) {
-        this.patient = patient;
-        this.doctor = doctor;
-        this.diagnosis = "";
         this.date = date;
-        this.medicaments = new ArrayList<>();
+        this.doctor = doctor;
+        this.patient = patient;
+        this.diagnosis = "";
+        this.treatments = new ArrayList<>();
         this.sickLeave = null;
     }
 
     public VisitsCreateDTO(EngagedEntity patient, EngagedEntity doctor) {
-        this.patient = patient;
-        this.doctor = doctor;
-        this.diagnosis = "";
         this.date = null;
-        this.medicaments = new ArrayList<>();
+        this.doctor = doctor;
+        this.patient = patient;
+        this.diagnosis = "";
+        this.treatments = new ArrayList<>();
         this.sickLeave = null;
     }
 }

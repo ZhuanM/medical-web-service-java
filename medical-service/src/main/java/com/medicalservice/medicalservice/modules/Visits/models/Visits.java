@@ -31,7 +31,7 @@ public class Visits {
     @NonNull
     private String diagnosis;
 
-    private List<Treatment> medicaments;
+    private List<Treatment> treatments;
 
     private SickLeave sickLeave;
 
@@ -40,14 +40,14 @@ public class Visits {
             @NonNull EngagedEntity doctor,
             @NonNull String date,
             @NonNull String diagnosis,
-            List<Treatment> medicaments,
+            List<Treatment> treatments,
             SickLeave sickLeave) {
         this.id = null;
-        this.patient = patient;
-        this.doctor = doctor;
         this.date = date;
+        this.doctor = doctor;
+        this.patient = patient;
         this.diagnosis = diagnosis;
-        this.medicaments = medicaments;
+        this.treatments = treatments;
         this.sickLeave = sickLeave;
     }
 
@@ -57,11 +57,11 @@ public class Visits {
             @NonNull String date,
             @NonNull String diagnosis) {
         this.id = null;
-        this.patient = patient;
-        this.doctor = doctor;
         this.date = date;
+        this.doctor = doctor;
+        this.patient = patient;
         this.diagnosis = diagnosis;
-        this.medicaments = new ArrayList<>();
+        this.treatments = new ArrayList<>();
         this.sickLeave = null;
     }
 
@@ -70,11 +70,11 @@ public class Visits {
             @NonNull EngagedEntity doctor,
             @NonNull String date) {
         this.id = null;
-        this.patient = patient;
-        this.doctor = doctor;
         this.date = date;
+        this.doctor = doctor;
+        this.patient = patient;
         this.diagnosis = null;
-        this.medicaments = new ArrayList<>();
+        this.treatments = new ArrayList<>();
         this.sickLeave = null;
     }
 }

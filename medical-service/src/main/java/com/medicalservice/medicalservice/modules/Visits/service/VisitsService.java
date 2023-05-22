@@ -46,48 +46,37 @@ public class VisitsService implements IVisitsService {
             );
         }
 
-        System.out.println(visit);
+        if (visitDTO.getTreatments() != null) {
+            visit.setTreatments(visitDTO.getTreatments());
+        }
 
-        if (visitDTO.getMedicaments() != null) visit.setMedicaments(visitDTO.getMedicaments());
-        if (visitDTO.getSickLeave() != null) visit.setSickLeave(visitDTO.getSickLeave());
+        if (visitDTO.getSickLeave() != null) {
+            visit.setSickLeave(visitDTO.getSickLeave());
+        }
 
         return this.visitsRepository.save(visit);
     }
 
     @Override
     public List<Visits> getAll(Map<String, String> query) {
-
         List<String> combinedEntries = query.entrySet()
                 .stream()
-                .map(x ->
-                        Objects.equals(x.getKey(), "date") ?
-                                "{" + x.getKey() + ":" + "{$eq: " + x.getValue() + "}}"
-                                : "{" + x.getKey() + ":" + "{$eq:" + x.getValue() + "}}")
-
+                .map(x -> Objects.equals(x.getKey(), "date") ?
+                        "{" + x.getKey() + ":" + "{$eq: " + x.getValue() + "}}" :
+                        "{" + x.getKey() + ":" + "{$eq:" + x.getValue() + "}}")
                 .collect(Collectors.toList());
-        System.out.println(combinedEntries);
+
         return this.visitsRepository.findByQuery(query);
-//        return this.visitsRepository.findAll();
     }
 
     @Override
     public Visits getById(String visitId) throws Exception {
         Optional<Visits> visit = this.visitsRepository.findById(visitId);
-        if (visit.isEmpty()) throw new Exception("Visit not found!");
+        if (visit.isEmpty()) {
+            throw new Exception("Visit not found!");
+        }
+
         return visit.get();
-    }
-
-    @Override
-    public Visits update(String visitId, VisitsUpdateDTO payload) throws Exception {
-        Visits visit = this.visitsRepository.findById(visitId).orElse(null);
-
-        if (visit == null) throw new Exception("Visit not found!");
-
-        if (payload.getSickLeave() != null) visit.setSickLeave(payload.getSickLeave());
-        if (payload.getMedicaments() != null) visit.setMedicaments(payload.getMedicaments());
-        if (!payload.getDiagnosis().isEmpty()) visit.setDiagnosis(payload.getDiagnosis());
-
-        return this.visitsRepository.save(visit);
     }
 
     @Override
@@ -97,6 +86,29 @@ public class VisitsService implements IVisitsService {
         if (visit.isEmpty()) throw new Exception("Visit not found!");
 
         this.visitsRepository.deleteById(visitId);
+    }
+
+    @Override
+    public Visits update(String visitId, VisitsUpdateDTO payload) throws Exception {
+        Visits visit = this.visitsRepository.findById(visitId).orElse(null);
+
+        if (visit == null) {
+            throw new Exception("Visit not found!");
+        }
+
+        if (payload.getSickLeave() != null) {
+            visit.setSickLeave(payload.getSickLeave());
+        }
+
+        if (payload.getTreatments() != null) {
+            visit.setTreatments(payload.getTreatments());
+        }
+
+        if (!payload.getDiagnosis().isEmpty()) {
+            visit.setDiagnosis(payload.getDiagnosis());
+        }
+
+        return this.visitsRepository.save(visit);
     }
 
     @Override

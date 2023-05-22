@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VisitsUpdateDTO {
-    private List<Treatment> medicaments;
+    private List<Treatment> treatments;
     private String diagnosis;
     private SickLeave sickLeave;
 }
