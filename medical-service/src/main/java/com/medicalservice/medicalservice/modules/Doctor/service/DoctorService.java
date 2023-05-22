@@ -36,7 +36,7 @@ public class DoctorService implements IDoctorService {
 
         EngagedEntity en = new EngagedEntity(
                 user.getId(),
-                "http://localhost:8080/user" + "/" + user.getId()
+                doctorDTO.getName()
         );
         Set<Specialization> specializations = new LinkedHashSet<>();
         specializations.add(doctorDTO.getSpecialization());

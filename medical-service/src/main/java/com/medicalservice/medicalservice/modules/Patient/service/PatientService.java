@@ -32,19 +32,19 @@ public class PatientService implements IPatientService {
                 patientRegisterDTO.getPassword(),
                 "PATIENT"
         );
-        String gpHref = patientRegisterDTO.getGp().getHref() != null ?
-                patientRegisterDTO.getGp().getHref()
-                : "http://localhost:8080/user" + "/" + patientRegisterDTO.getGp().getUserId();
+
+        user = this.appUserService.save(user);
+
         EngagedEntity gp = new EngagedEntity(
                 patientRegisterDTO.getGp().getUserId(),
-                gpHref
+                patientRegisterDTO.getGp().getName()
         );
-        user = this.appUserService.save(user);
 
         EngagedEntity ee = new EngagedEntity(
                 user.getId(),
-                "http://localhost:8080/user" + "/" + user.getId()
+                patientRegisterDTO.getName()
         );
+
         Patient patient = new Patient(
                 patientRegisterDTO.getUniqueCitizenNumber(),
                 ee,
