@@ -23,8 +23,8 @@ public class DoctorController {
         try {
             return new ResponseEntity<>(this.doctorService.save(doctorRegisterDTO), HttpStatus.CREATED);
         }
-        catch (Exception exc) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.INTERNAL_SERVER_ERROR, exc.getLocalizedMessage());
+        catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
@@ -41,8 +41,8 @@ public class DoctorController {
         try {
             return new ResponseEntity<>(this.doctorService.getById(doctorId), HttpStatus.OK);
         }
-        catch (Exception exc) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.INTERNAL_SERVER_ERROR, exc.getLocalizedMessage());
+        catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
@@ -53,8 +53,8 @@ public class DoctorController {
         try {
             return new ResponseEntity<>(this.doctorService.update(doctorId, payload), HttpStatus.OK);
         }
-        catch (Exception exc) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, exc.getMessage());
+        catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
@@ -66,8 +66,8 @@ public class DoctorController {
             this.doctorService.delete(doctorId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        catch (Exception exc) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, exc.getLocalizedMessage());
+        catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
@@ -78,8 +78,8 @@ public class DoctorController {
         try {
             return new ResponseEntity<>(this.doctorService.listSpecializations(), HttpStatus.OK);
         }
-        catch (Exception exc) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, exc.getLocalizedMessage());
+        catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }

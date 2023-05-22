@@ -9,21 +9,24 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document(collection = "AppUser")
-@JsonInclude(JsonInclude.Include.NON_NULL)  //stores only not null values
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AppUser {
     @Id
     private String id;
+
     @Indexed(unique=true)
     @NonNull
     private String username;
+
     @NonNull
     private String password;
+
     @NonNull
     private String role;
 
     public AppUser(@NonNull String username, @NonNull String password, @NonNull String role) {
+        this.role = role;
         this.username = username;
         this.password = password;
-        this.role = role;
     }
 }

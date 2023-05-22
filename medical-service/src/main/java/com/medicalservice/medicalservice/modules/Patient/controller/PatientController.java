@@ -26,8 +26,8 @@ public class PatientController {
         try {
             return new ResponseEntity<>(this.patientService.save(patientRegisterDTO), HttpStatus.CREATED);
         }
-        catch (Exception exc) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.INTERNAL_SERVER_ERROR, exc.getLocalizedMessage());
+        catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
@@ -42,8 +42,8 @@ public class PatientController {
         try {
             return new ResponseEntity<>(this.patientService.getById(patientId), HttpStatus.OK);
         }
-        catch (Exception exc) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, exc.getLocalizedMessage());
+        catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
@@ -53,8 +53,8 @@ public class PatientController {
         try {
             return new ResponseEntity<>(this.patientService.update(patientId, payload), HttpStatus.OK);
         }
-        catch (Exception exc) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, exc.getMessage());
+        catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
@@ -65,8 +65,8 @@ public class PatientController {
             this.patientService.delete(patientId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        catch (Exception exc) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, exc.getLocalizedMessage());
+        catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }

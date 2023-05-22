@@ -25,8 +25,8 @@ public class AuthController {
         try {
             return new ResponseEntity<>(this.authService.authenticate(jwtRequest, jwtUtility, authManager), HttpStatus.OK);
         }
-        catch (Exception exc) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.UNAUTHORIZED, exc.getMessage());
+        catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.UNAUTHORIZED, ex.getMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }

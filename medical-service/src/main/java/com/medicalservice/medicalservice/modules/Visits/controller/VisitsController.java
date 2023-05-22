@@ -28,8 +28,8 @@ public class VisitsController {
     public ResponseEntity<Object> save(@RequestBody VisitsCreateDTO payload) {
         try {
             return new ResponseEntity<>(this.visitsService.save(payload), HttpStatus.CREATED);
-        } catch (Exception exc) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.INTERNAL_SERVER_ERROR, exc.getLocalizedMessage());
+        } catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
@@ -44,8 +44,8 @@ public class VisitsController {
     public ResponseEntity<Object> getById(@PathVariable String visitId) {
         try {
             return new ResponseEntity<>(this.visitsService.getById(visitId), HttpStatus.OK);
-        } catch (Exception exc) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, exc.getLocalizedMessage());
+        } catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
@@ -55,8 +55,8 @@ public class VisitsController {
     public ResponseEntity<Object> update(@PathVariable String visitId, @RequestBody VisitsUpdateDTO payload) {
         try {
             return new ResponseEntity<>(this.visitsService.update(visitId, payload), HttpStatus.OK);
-        } catch (Exception exc) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, exc.getMessage());
+        } catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
@@ -66,8 +66,8 @@ public class VisitsController {
         try {
             this.visitsService.delete(visitId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception exc) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, exc.getLocalizedMessage());
+        } catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }

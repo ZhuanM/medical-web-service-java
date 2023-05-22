@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Collectors;
 
-//@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(path = "/user")
 public class AppUserController {
@@ -30,8 +29,8 @@ public class AppUserController {
         try {
             return new ResponseEntity<>(this.appUserService.getUserById(userId), HttpStatus.OK);
         }
-        catch (Exception exc) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, exc.getLocalizedMessage());
+        catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
