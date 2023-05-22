@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Treatment {
     private String medicamentName;
-    private String pharmaceuticalCompany;
     private String dosage;
 }
