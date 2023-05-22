@@ -20,6 +20,6 @@ public interface PatientRepository extends MongoRepository<Patient, String> {
     @Query("{'$and': [?0]}")
     List<Patient> findByQuery(Map<String, String> query);
 
-    @Query("{ 'engagedParty.userId' : ?0 }")
+    @Query("{ 'engagedEntity.userId' : ?0 }")
     Optional<Patient> findByUserId(String userId);
 }

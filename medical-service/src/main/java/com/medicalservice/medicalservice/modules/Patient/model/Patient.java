@@ -18,7 +18,7 @@ public class Patient {
     @Id
     private String id;
 
-    @Indexed(unique = true)
+    @Indexed(unique = true, sparse = true)
     private EngagedEntity engagedEntity;
 
     @NonNull

@@ -35,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .authorizeRequests()
+                // TODO REMOVE THE LINE BELOW AFTER TESTING THE PROJECT
+                .antMatchers("/").permitAll()
                 .antMatchers("/auth/token", "/doctor", "/patient", "/doctor/specialities")
                 .permitAll()
                 .antMatchers("/doctor/**").hasRole("DOCTOR")
