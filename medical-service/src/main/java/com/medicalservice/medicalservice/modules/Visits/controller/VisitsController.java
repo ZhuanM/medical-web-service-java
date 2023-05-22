@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @CrossOrigin(origins = "http://localhost:4202")
 @RestController
 @RequestMapping("/visits")
@@ -50,17 +47,6 @@ public class VisitsController {
         }
     }
 
-    @PostAuthorize("hasRole('ROLE_DOCTOR')")
-    @PatchMapping(path = "/{visitId}")
-    public ResponseEntity<Object> update(@PathVariable String visitId, @RequestBody VisitsUpdateDTO payload) {
-        try {
-            return new ResponseEntity<>(this.visitsService.update(visitId, payload), HttpStatus.OK);
-        } catch (Exception ex) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getMessage());
-            return new ResponseEntity<>(error, error.getHttpStatus());
-        }
-    }
-
     @DeleteMapping(path = "/{visitId}")
     public ResponseEntity<Object> delete(@PathVariable String visitId) {
         try {
@@ -68,6 +54,17 @@ public class VisitsController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
             CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
+            return new ResponseEntity<>(error, error.getHttpStatus());
+        }
+    }
+
+    @PostAuthorize("hasRole('ROLE_DOCTOR')")
+    @PatchMapping(path = "/{visitId}")
+    public ResponseEntity<Object> update(@PathVariable String visitId, @RequestBody VisitsUpdateDTO payload) {
+        try {
+            return new ResponseEntity<>(this.visitsService.update(visitId, payload), HttpStatus.OK);
+        } catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }

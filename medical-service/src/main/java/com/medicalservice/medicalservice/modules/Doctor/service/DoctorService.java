@@ -25,7 +25,9 @@ public class DoctorService implements IDoctorService {
 
     @Override
     public Doctor save(DoctorRegisterDTO doctorDTO) throws Exception {
-        if(this.UniqueDoctorNumberExists(doctorDTO.getUniqueDoctorNumber())) throw new Exception("Doctor with this UniqueDoctorNumber already exists!");
+        if(this.UniqueDoctorNumberExists(doctorDTO.getUniqueDoctorNumber())) {
+            throw new Exception("Doctor with this UniqueDoctorNumber already exists!");
+        }
 
         AppUser user = new AppUser(
                 doctorDTO.getUsername(),
@@ -38,8 +40,10 @@ public class DoctorService implements IDoctorService {
                 user.getId(),
                 doctorDTO.getName()
         );
+
         Set<Specialization> specializations = new LinkedHashSet<>();
         specializations.add(doctorDTO.getSpecialization());
+
         Doctor doctor = new Doctor(
                 doctorDTO.getUniqueDoctorNumber(),
                 en,
@@ -57,21 +61,41 @@ public class DoctorService implements IDoctorService {
     @Override
     public Doctor getById(String doctorId) throws Exception {
         Optional<Doctor> doctor = this.doctorRepository.findById(doctorId);
-        if (doctor.isEmpty()) throw new Exception("Doctor not found!");
+        if (doctor.isEmpty()) {
+            throw new Exception("Doctor not found!");
+        }
+
         return doctor.get();
     }
 
     public Doctor getByUserId(String userId) throws Exception {
         Optional<Doctor> doctor = this.doctorRepository.findByUserId(userId);
-        if (doctor.isEmpty()) throw new Exception("Doctor not found!");
+        if (doctor.isEmpty()) {
+            throw new Exception("Doctor not found!");
+        }
+
         return doctor.get();
+    }
+
+    @Override
+    public void delete(String doctorId) throws Exception {
+        Doctor doctor = this.doctorRepository.findById(doctorId).orElse(null);
+
+        if(doctor == null) {
+            throw new Exception("Patient not found!");
+        }
+
+        this.doctorRepository.deleteById(doctorId);
+        this.appUserService.delete(doctor.getEngagedEntity().getUserId());
     }
 
     @Override
     public Doctor update(String doctorId, DoctorUpdateDTO payload) throws Exception {
         Doctor doctor = this.doctorRepository.findById(doctorId).orElse(null);
 
-        if(doctor == null) throw new Exception("Doctor not found!");
+        if(doctor == null) {
+            throw new Exception("Doctor not found!");
+        }
 
         if(payload.getName() != null) {
             doctor.setName(payload.getName());
@@ -92,21 +116,11 @@ public class DoctorService implements IDoctorService {
     }
 
     @Override
-    public void delete(String doctorId) throws Exception {
-        Doctor doctor = this.doctorRepository.findById(doctorId).orElse(null);
-
-        if(doctor == null) throw new Exception("Patient not found!");
-
-        this.doctorRepository.deleteById(doctorId);
-        this.appUserService.delete(doctor.getEngagedEntity().getUserId());
+    public List<Specialization> listSpecializations() {
+        return new ArrayList<>(EnumSet.allOf(Specialization.class));
     }
 
     private boolean UniqueDoctorNumberExists(String UniqueDoctorNumber) {
         return this.doctorRepository.findByUniqueDoctorNumber(UniqueDoctorNumber).isPresent();
-    }
-
-    @Override
-    public List<Specialization> listSpecializations() {
-        return new ArrayList<>(EnumSet.allOf(Specialization.class));
     }
 }

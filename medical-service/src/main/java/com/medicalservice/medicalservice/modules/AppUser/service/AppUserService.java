@@ -30,8 +30,11 @@ public class AppUserService implements IAppUserService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AppUser user = appUserRepository.findByUsername(username).orElse(null);
-        if (user == null) throw new UsernameNotFoundException("Wrong credentials!");
-        else System.out.println(("User found id DB " + username));
+        if (user == null) {
+            throw new UsernameNotFoundException("Wrong credentials!");
+        } else {
+            System.out.println(("User found id DB " + username));
+        }
 
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
@@ -41,7 +44,10 @@ public class AppUserService implements IAppUserService, UserDetailsService {
 
     @Override
     public AppUser save(AppUser appUser) throws Exception {
-        if (this.usernameExists(appUser.getUsername())) throw new Exception("Username exists!");
+        if (this.usernameExists(appUser.getUsername())) {
+            throw new Exception("Username exists!");
+        }
+
         appUser.setPassword(this.passwordEncoder.encode(appUser.getPassword()));
         return this.appUserRepository.save(appUser);
     }
@@ -59,51 +65,46 @@ public class AppUserService implements IAppUserService, UserDetailsService {
     @Override
     public AppUserDTO getUserById(String id) throws Exception {
         Optional<AppUser> optionalUser = this.getById(id);
-        if (optionalUser.isEmpty()) throw new Exception("User Not Found!");
-        return this.convertToDTO(optionalUser.get());
-    }
+        if (optionalUser.isEmpty()) {
+            throw new Exception("User Not Found!");
+        }
 
-    @Override
-    public AppUserDTO getUserByUsername(String username) throws Exception {
-        Optional<AppUser> optionalUser = this.appUserRepository.findByUsername(username);
-        if (optionalUser.isEmpty()) throw new Exception("User Not Found!");
         return this.convertToDTO(optionalUser.get());
     }
 
     @Override
     public AppUser findUserByUsername(String username) throws Exception {
         Optional<AppUser> optionalUser = this.appUserRepository.findByUsername(username);
-        if (optionalUser.isEmpty()) throw new Exception("User Not Found!");
-        return optionalUser.get();
-    }
-
-    @Override
-    public AppUser update(String id, AppUserUpdateDTO payload) throws Exception {
-        AppUser user = this.appUserRepository.findById(id).orElse(null);
-
-        if (user == null) throw new Exception("User Not Found!");
-
-        if (!payload.getPassword().isEmpty()) {
-            user.setPassword(payload.getPassword());
+        if (optionalUser.isEmpty()) {
+            throw new Exception("User Not Found!");
         }
-        return this.appUserRepository.save(user);
+
+        return optionalUser.get();
     }
 
     @Override
     public void delete(String id) throws Exception {
         AppUser user = this.appUserRepository.findById(id).orElse(null);
 
-        if (user == null) throw new Exception("User Not Found!");
+        if (user == null) {
+            throw new Exception("User Not Found!");
+        }
 
         this.appUserRepository.deleteById(id);
     }
 
-    public boolean usernameExists(String username) {
-        return this.appUserRepository.findByUsername(username).isPresent();
-    }
+    @Override
+    public AppUser update(String id, AppUserUpdateDTO payload) throws Exception {
+        AppUser user = this.appUserRepository.findById(id).orElse(null);
 
-    public boolean hashedPasswordMatches(String payloadPassword, String hashedPassword) {
-        return this.passwordEncoder.matches(payloadPassword, hashedPassword);
+        if (user == null) {
+            throw new Exception("User Not Found!");
+        }
+
+        if (!payload.getPassword().isEmpty()) {
+            user.setPassword(payload.getPassword());
+        }
+        return this.appUserRepository.save(user);
     }
 
     public AppUserDTO convertToDTO(AppUser appUser) {
@@ -112,5 +113,13 @@ public class AppUserService implements IAppUserService, UserDetailsService {
                 appUser.getUsername(),
                 appUser.getRole()
         );
+    }
+
+    public boolean hashedPasswordMatches(String payloadPassword, String hashedPassword) {
+        return this.passwordEncoder.matches(payloadPassword, hashedPassword);
+    }
+
+    public boolean usernameExists(String username) {
+        return this.appUserRepository.findByUsername(username).isPresent();
     }
 }

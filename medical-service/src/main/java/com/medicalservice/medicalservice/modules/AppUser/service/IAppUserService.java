@@ -17,16 +17,15 @@ public interface IAppUserService extends UserDetailsService {
 
     AppUserDTO getUserById(String id) throws Exception;
 
-    AppUserDTO getUserByUsername(String username) throws Exception;
     AppUser findUserByUsername(String username) throws Exception;
-
-    AppUser update(String id, AppUserUpdateDTO payload) throws Exception;
 
     void delete(String id) throws Exception;
 
-    boolean usernameExists(String username);
-
-    boolean hashedPasswordMatches(String password, String password1);
+    AppUser update(String id, AppUserUpdateDTO payload) throws Exception;
 
     AppUserDTO convertToDTO(AppUser appUser);
+
+    boolean hashedPasswordMatches(String payloadPassword, String hashedPassword);
+
+    boolean usernameExists(String username);
 }

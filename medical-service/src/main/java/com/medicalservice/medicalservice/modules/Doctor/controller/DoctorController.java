@@ -14,20 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/doctor")
 public class DoctorController {
-
     @Autowired
     private IDoctorService doctorService;
-
-    @PostMapping
-    public ResponseEntity<Object> save(@RequestBody DoctorRegisterDTO doctorRegisterDTO) {
-        try {
-            return new ResponseEntity<>(this.doctorService.save(doctorRegisterDTO), HttpStatus.CREATED);
-        }
-        catch (Exception ex) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage());
-            return new ResponseEntity<>(error, error.getHttpStatus());
-        }
-    }
 
     @PreAuthorize("hasRole('ROLE_DOCTOR')")
     @GetMapping
@@ -47,14 +35,13 @@ public class DoctorController {
         }
     }
 
-    @PreAuthorize("hasRole('ROLE_DOCTOR')")
-    @PatchMapping(path = "/{doctorId}")
-    public ResponseEntity<Object> update(@PathVariable String doctorId, @RequestBody DoctorUpdateDTO payload) {
+    @PostMapping
+    public ResponseEntity<Object> save(@RequestBody DoctorRegisterDTO doctorRegisterDTO) {
         try {
-            return new ResponseEntity<>(this.doctorService.update(doctorId, payload), HttpStatus.OK);
+            return new ResponseEntity<>(this.doctorService.save(doctorRegisterDTO), HttpStatus.CREATED);
         }
         catch (Exception ex) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getMessage());
+            CustomResponseError error = new CustomResponseError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }
@@ -68,6 +55,18 @@ public class DoctorController {
         }
         catch (Exception ex) {
             CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
+            return new ResponseEntity<>(error, error.getHttpStatus());
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_DOCTOR')")
+    @PatchMapping(path = "/{doctorId}")
+    public ResponseEntity<Object> update(@PathVariable String doctorId, @RequestBody DoctorUpdateDTO payload) {
+        try {
+            return new ResponseEntity<>(this.doctorService.update(doctorId, payload), HttpStatus.OK);
+        }
+        catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }

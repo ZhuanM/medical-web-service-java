@@ -11,7 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4202")
 @RestController
@@ -34,13 +33,25 @@ public class PatientController {
 
     @GetMapping
     public ResponseEntity<Object> getAll(HttpServletRequest request) {
-        return new ResponseEntity<> (this.patientService.getAll(this.patientService.getFilters(request)), HttpStatus.OK);
+        return new ResponseEntity<>(this.patientService.getAll(this.patientService.getFilters(request)), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{patientId}")
     public ResponseEntity<Object> getById(@PathVariable String patientId) {
         try {
             return new ResponseEntity<>(this.patientService.getById(patientId), HttpStatus.OK);
+        }
+        catch (Exception ex) {
+            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
+            return new ResponseEntity<>(error, error.getHttpStatus());
+        }
+    }
+
+    @DeleteMapping(path = "/{patientId}")
+    public ResponseEntity<Object> delete(@PathVariable String patientId) {
+        try {
+            this.patientService.delete(patientId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         catch (Exception ex) {
             CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
@@ -55,18 +66,6 @@ public class PatientController {
         }
         catch (Exception ex) {
             CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getMessage());
-            return new ResponseEntity<>(error, error.getHttpStatus());
-        }
-    }
-
-    @DeleteMapping(path = "/{patientId}")
-    public ResponseEntity<Object> delete(@PathVariable String patientId) {
-        try {
-            this.patientService.delete(patientId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        catch (Exception ex) {
-            CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
             return new ResponseEntity<>(error, error.getHttpStatus());
         }
     }

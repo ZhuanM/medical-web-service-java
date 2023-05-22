@@ -15,9 +15,9 @@ public interface IDoctorService {
 
     Doctor getById(String doctorId) throws Exception;
 
-    Doctor update(String doctorId, DoctorUpdateDTO payload) throws Exception;
-
     void delete(String doctorId) throws Exception;
+
+    Doctor update(String doctorId, DoctorUpdateDTO payload) throws Exception;
 
     List<Specialization> listSpecializations();
 }

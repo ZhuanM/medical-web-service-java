@@ -25,7 +25,9 @@ public class PatientService implements IPatientService {
 
     @Override
     public Patient save(PatientRegisterDTO patientRegisterDTO) throws Exception {
-        if(this.UniqueCitizenNumberExists(patientRegisterDTO.getUniqueCitizenNumber())) throw new Exception("UniqueCitizenNumber exists!");
+        if(this.UniqueCitizenNumberExists(patientRegisterDTO.getUniqueCitizenNumber())) {
+            throw new Exception("UniqueCitizenNumber exists!");
+        }
 
         AppUser user = new AppUser(
                 patientRegisterDTO.getUsername(),
@@ -51,6 +53,7 @@ public class PatientService implements IPatientService {
                 gp,
                 patientRegisterDTO.getName()
         );
+
         return this.patientRepository.save(patient);
     }
 
@@ -58,9 +61,7 @@ public class PatientService implements IPatientService {
     public List<Patient> getAll(Map<String, String> query) {
         List<String> combinedEntries = query.entrySet()
                 .stream()
-                .map(x ->
-                        "{" + x.getKey() + ":" + "{$eq:" + x.getValue() + "}}")
-
+                .map(x -> "{" + x.getKey() + ":" + "{$eq:" + x.getValue() + "}}")
                 .collect(Collectors.toList());
         return this.patientRepository.findByQuery(query);
     }
@@ -68,21 +69,45 @@ public class PatientService implements IPatientService {
     @Override
     public Patient getById(String patientId) throws Exception {
         Optional<Patient> patient = this.patientRepository.findById(patientId);
-        if (patient.isEmpty()) throw new Exception("Patient not found!");
+        if (patient.isEmpty()) {
+            throw new Exception("Patient not found!");
+        }
+
         return patient.get();
     }
 
     public Patient getByUserId(String userId) throws Exception {
         Optional<Patient> patient = this.patientRepository.findByUserId(userId);
-        if (patient.isEmpty()) throw new Exception("Patient not found!");
+        if (patient.isEmpty()) {
+            throw new Exception("Patient not found!");
+        }
+
         return patient.get();
+    }
+
+    @Override
+    public void delete(String id) throws Exception {
+        Patient patient = this.patientRepository.findById(id).orElse(null);
+
+        if(patient == null) {
+            throw new Exception("Patient not found!");
+        }
+
+        this.patientRepository.deleteById(id);
+        this.appUserService.delete(patient.getEngagedEntity().getUserId());
+    }
+
+    private boolean UniqueCitizenNumberExists(String UniqueCitizenNumber) {
+        return this.patientRepository.findByUniqueCitizenNumber(UniqueCitizenNumber).isPresent();
     }
 
     @Override
     public Patient update(String id, PatientUpdateDTO payload) throws Exception {
         Patient patient = this.patientRepository.findById(id).orElse(null);
 
-        if(patient == null) throw new Exception("Patient not found!");
+        if(patient == null) {
+            throw new Exception("Patient not found!");
+        }
 
         if(payload.getName() != null) {
             patient.setName(payload.getName());
@@ -95,20 +120,6 @@ public class PatientService implements IPatientService {
         }
 
         return this.patientRepository.save(patient);
-    }
-
-    @Override
-    public void delete(String id) throws Exception {
-        Patient patient = this.patientRepository.findById(id).orElse(null);
-
-        if(patient == null) throw new Exception("Patient not found!");
-
-        this.patientRepository.deleteById(id);
-        this.appUserService.delete(patient.getEngagedEntity().getUserId());
-    }
-
-    private boolean UniqueCitizenNumberExists(String UniqueCitizenNumber) {
-        return this.patientRepository.findByUniqueCitizenNumber(UniqueCitizenNumber).isPresent();
     }
 
     @Override

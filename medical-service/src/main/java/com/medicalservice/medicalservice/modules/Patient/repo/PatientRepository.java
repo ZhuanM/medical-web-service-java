@@ -14,12 +14,12 @@ public interface PatientRepository extends MongoRepository<Patient, String> {
     @Query("{ 'id' : ?0 }")
     Optional<Patient> findById(String patientId);
 
-    @Query("{ 'UniqueCitizenNumber' : ?0 }")
-    Optional<Patient> findByUniqueCitizenNumber(String UniqueCitizenNumber);
+    @Query("{ 'engagedEntity.userId' : ?0 }")
+    Optional<Patient> findByUserId(String userId);
 
     @Query("{'$and': [?0]}")
     List<Patient> findByQuery(Map<String, String> query);
 
-    @Query("{ 'engagedEntity.userId' : ?0 }")
-    Optional<Patient> findByUserId(String userId);
+    @Query("{ 'UniqueCitizenNumber' : ?0 }")
+    Optional<Patient> findByUniqueCitizenNumber(String UniqueCitizenNumber);
 }

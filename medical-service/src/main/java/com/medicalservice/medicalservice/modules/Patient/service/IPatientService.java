@@ -12,8 +12,10 @@ public interface IPatientService {
     Patient save(PatientRegisterDTO patientRegisterDTO) throws Exception;
     List<Patient> getAll(Map<String, String> query);
     Patient getById(String patientId) throws Exception;
-    Patient update(String id, PatientUpdateDTO payload) throws Exception;
+
     void delete(String id) throws Exception;
+
+    Patient update(String id, PatientUpdateDTO payload) throws Exception;
 
     Map<String, String> getFilters(HttpServletRequest request);
 }
