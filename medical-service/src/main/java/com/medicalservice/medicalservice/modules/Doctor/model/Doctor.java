@@ -20,8 +20,7 @@ public class Doctor {
     private String id;
 
     @Indexed(unique = true)
-    private String NPI;
-
+    private String UniqueDoctorNumber;
 
     private EngagedEntity engagedEntity;
 
@@ -30,14 +29,14 @@ public class Doctor {
 
     Set<Specialization> specializations;
 
-    public Doctor(String NPI, EngagedEntity engagedEntity, @NonNull String name) {
-        this.NPI = NPI;
+    public Doctor(String UniqueDoctorNumber, EngagedEntity engagedEntity, @NonNull String name) {
+        this.UniqueDoctorNumber = UniqueDoctorNumber;
         this.engagedEntity = engagedEntity;
         this.name = name;
     }
 
-    public Doctor(String NPI, EngagedEntity engagedEntity, @NonNull String name, @NonNull Set<Specialization> specializations) {
-        this.NPI = NPI;
+    public Doctor(String UniqueDoctorNumber, EngagedEntity engagedEntity, @NonNull String name, @NonNull Set<Specialization> specializations) {
+        this.UniqueDoctorNumber = UniqueDoctorNumber;
         this.engagedEntity = engagedEntity;
         this.name = name;
         this.specializations = specializations;

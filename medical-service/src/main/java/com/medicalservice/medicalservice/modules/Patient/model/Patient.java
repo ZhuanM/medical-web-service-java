@@ -28,7 +28,7 @@ public class Patient {
      */
     @NonNull
     @Indexed(unique = true)
-    private String UCN;
+    private String UniqueCitizenNumber;
 
     @NonNull
     private String name;
@@ -36,11 +36,11 @@ public class Patient {
     private Date healthTaxesPaidUntil;
 
     public Patient(
-            @NonNull String UCN,
+            @NonNull String UniqueCitizenNumber,
             @NonNull EngagedEntity engagedEntity,
             @NonNull EngagedEntity gp,
             @NonNull String name) {
-        this.UCN = UCN;
+        this.UniqueCitizenNumber = UniqueCitizenNumber;
         this.engagedEntity = engagedEntity;
         this.gp = gp;
         this.name = name;
@@ -48,22 +48,22 @@ public class Patient {
     }
 
     public Patient(
-            @NonNull String UCN,
-            @NonNull EngagedEntity engagedEntityd,
+            @NonNull String UniqueCitizenNumber,
+            @NonNull EngagedEntity engagedEntity,
             @NonNull String name) {
-        this.UCN = UCN;
-        this.engagedEntity = engagedEntityd;
+        this.UniqueCitizenNumber = UniqueCitizenNumber;
+        this.engagedEntity = engagedEntity;
         this.gp = null;
         this.name = name;
         this.healthTaxesPaidUntil = null;
     }
 
     public Patient(
-            @NonNull String UCN,
+            @NonNull String UniqueCitizenNumber,
             @NonNull EngagedEntity engagedEntity,
             @NonNull String name,
             Date healthTaxesPaidUntil) {
-        this.UCN = UCN;
+        this.UniqueCitizenNumber = UniqueCitizenNumber;
         this.engagedEntity = engagedEntity;
         this.gp = null;
         this.name = name;
@@ -71,12 +71,12 @@ public class Patient {
     }
 
     public Patient(
-            @NonNull String UCN,
+            @NonNull String UniqueCitizenNumber,
             @NonNull EngagedEntity engagedEntity,
             @NonNull EngagedEntity gp,
             @NonNull String name,
             Date healthTaxesPaidUntil) {
-        this.UCN = UCN;
+        this.UniqueCitizenNumber = UniqueCitizenNumber;
         this.engagedEntity = engagedEntity;
         this.gp = gp;
         this.name = name;

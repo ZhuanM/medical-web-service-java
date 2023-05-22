@@ -10,16 +10,16 @@ public class PatientRegisterDTO {
 
     private String password;
 
-    private String UCN;
+    private String UniqueCitizenNumber;
 
     private EngagedEntity gp;
 
     private String name;
 
-    public PatientRegisterDTO(String username, String password, String UCN, EngagedEntity gp, String name) {
+    public PatientRegisterDTO(String username, String password, String UniqueCitizenNumber, EngagedEntity gp, String name) {
         this.username = username;
         this.password = password;
-        this.UCN = UCN;
+        this.UniqueCitizenNumber = UniqueCitizenNumber;
         this.gp = gp;
         this.name = name;
     }

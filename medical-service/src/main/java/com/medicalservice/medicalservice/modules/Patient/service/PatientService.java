@@ -25,7 +25,7 @@ public class PatientService implements IPatientService {
 
     @Override
     public Patient save(PatientRegisterDTO patientRegisterDTO) throws Exception {
-        if(this.ucnExists(patientRegisterDTO.getUCN())) throw new Exception("UCN exists!");
+        if(this.UniqueCitizenNumberExists(patientRegisterDTO.getUniqueCitizenNumber())) throw new Exception("UniqueCitizenNumber exists!");
 
         AppUser user = new AppUser(
                 patientRegisterDTO.getUsername(),
@@ -41,13 +41,13 @@ public class PatientService implements IPatientService {
         );
         user = this.appUserService.save(user);
 
-        EngagedEntity ep = new EngagedEntity(
+        EngagedEntity ee = new EngagedEntity(
                 user.getId(),
                 "http://localhost:8080/user" + "/" + user.getId()
         );
         Patient patient = new Patient(
-                patientRegisterDTO.getUCN(),
-                ep,
+                patientRegisterDTO.getUniqueCitizenNumber(),
+                ee,
                 gp,
                 patientRegisterDTO.getName()
         );
@@ -107,8 +107,8 @@ public class PatientService implements IPatientService {
         this.appUserService.delete(patient.getEngagedEntity().getUserId());
     }
 
-    private boolean ucnExists(String ucn) {
-        return this.patientRepository.findByUCN(ucn).isPresent();
+    private boolean UniqueCitizenNumberExists(String UniqueCitizenNumber) {
+        return this.patientRepository.findByUniqueCitizenNumber(UniqueCitizenNumber).isPresent();
     }
 
     @Override

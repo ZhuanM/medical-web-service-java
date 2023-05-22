@@ -25,7 +25,7 @@ public class DoctorService implements IDoctorService {
 
     @Override
     public Doctor save(DoctorRegisterDTO doctorDTO) throws Exception {
-        if(this.npiExists(doctorDTO.getNPI())) throw new Exception("Doctor with this NPI already exists!");
+        if(this.UniqueDoctorNumberExists(doctorDTO.getUniqueDoctorNumber())) throw new Exception("Doctor with this UniqueDoctorNumber already exists!");
 
         AppUser user = new AppUser(
                 doctorDTO.getUsername(),
@@ -41,7 +41,7 @@ public class DoctorService implements IDoctorService {
         Set<Specialization> specializations = new LinkedHashSet<>();
         specializations.add(doctorDTO.getSpecialization());
         Doctor doctor = new Doctor(
-                doctorDTO.getNPI(),
+                doctorDTO.getUniqueDoctorNumber(),
                 en,
                 doctorDTO.getName(),
                 specializations
@@ -101,8 +101,8 @@ public class DoctorService implements IDoctorService {
         this.appUserService.delete(doctor.getEngagedEntity().getUserId());
     }
 
-    private boolean npiExists(String ucn) {
-        return this.doctorRepository.findByNPI(ucn).isPresent();
+    private boolean UniqueDoctorNumberExists(String UniqueDoctorNumber) {
+        return this.doctorRepository.findByUniqueDoctorNumber(UniqueDoctorNumber).isPresent();
     }
 
     @Override

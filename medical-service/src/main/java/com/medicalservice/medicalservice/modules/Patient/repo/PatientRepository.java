@@ -14,8 +14,8 @@ public interface PatientRepository extends MongoRepository<Patient, String> {
     @Query("{ 'id' : ?0 }")
     Optional<Patient> findById(String patientId);
 
-    @Query("{ 'UCN' : ?0 }")
-    Optional<Patient> findByUCN(String ucn);
+    @Query("{ 'UniqueCitizenNumber' : ?0 }")
+    Optional<Patient> findByUniqueCitizenNumber(String UniqueCitizenNumber);
 
     @Query("{'$and': [?0]}")
     List<Patient> findByQuery(Map<String, String> query);
