@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // TODO REMOVE THE LINE BELOW AFTER TESTING THE PROJECT
                 .antMatchers("/").permitAll()
-                .antMatchers("/auth/token", "/doctor", "/patient", "/doctor/specialities")
+                .antMatchers("/auth/token", "/doctor", "/patient", "/doctor/specializations")
                 .permitAll()
                 .antMatchers("/doctor/**").hasRole("DOCTOR")
                 .antMatchers("/patient/**").hasRole("PATIENT")

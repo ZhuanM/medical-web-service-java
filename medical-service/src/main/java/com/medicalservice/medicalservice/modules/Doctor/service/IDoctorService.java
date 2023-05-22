@@ -19,5 +19,5 @@ public interface IDoctorService {
 
     void delete(String doctorId) throws Exception;
 
-    List<Specialization> listSpecialities();
+    List<Specialization> listSpecializations();
 }

@@ -38,13 +38,13 @@ public class DoctorService implements IDoctorService {
                 user.getId(),
                 "http://localhost:8080/user" + "/" + user.getId()
         );
-        Set<Specialization> specialities = new LinkedHashSet<>();
-        specialities.add(doctorDTO.getSpecialization());
+        Set<Specialization> specializations = new LinkedHashSet<>();
+        specializations.add(doctorDTO.getSpecialization());
         Doctor doctor = new Doctor(
                 doctorDTO.getNPI(),
                 en,
                 doctorDTO.getName(),
-                specialities
+                specializations
         );
         return this.doctorRepository.save(doctor);
     }
@@ -82,7 +82,7 @@ public class DoctorService implements IDoctorService {
                 try {
                     Specialization.valueOf(specialization.toString());
                 } catch (Exception e) {
-                    throw new Exception("One of the specialities is incorrect");
+                    throw new Exception("One of the specializations is incorrect");
                 }
             }
             doctor.setSpecializations(payload.getSpecializations());
@@ -106,7 +106,7 @@ public class DoctorService implements IDoctorService {
     }
 
     @Override
-    public List<Specialization> listSpecialities() {
+    public List<Specialization> listSpecializations() {
         return new ArrayList<>(EnumSet.allOf(Specialization.class));
     }
 }

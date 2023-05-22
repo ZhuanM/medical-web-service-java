@@ -73,10 +73,10 @@ public class DoctorController {
     }
 
     @PreAuthorize("permitAll()")
-    @GetMapping(path = "/specialities")
-    public ResponseEntity<Object> listSpecialities() {
+    @GetMapping(path = "/specializations")
+    public ResponseEntity<Object> listSpecializations() {
         try {
-            return new ResponseEntity<>(this.doctorService.listSpecialities(), HttpStatus.OK);
+            return new ResponseEntity<>(this.doctorService.listSpecializations(), HttpStatus.OK);
         }
         catch (Exception exc) {
             CustomResponseError error = new CustomResponseError(HttpStatus.NOT_FOUND, exc.getLocalizedMessage());
