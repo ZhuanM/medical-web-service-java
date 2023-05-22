@@ -32,8 +32,6 @@ public class AppUserService implements IAppUserService, UserDetailsService {
         AppUser user = appUserRepository.findByUsername(username).orElse(null);
         if (user == null) {
             throw new UsernameNotFoundException("Wrong credentials!");
-        } else {
-            System.out.println(("User found id DB " + username));
         }
 
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();

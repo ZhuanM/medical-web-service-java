@@ -12,8 +12,7 @@ public interface IVisitsService {
     Visits save(VisitsCreateDTO patientRegisterDTO) throws Exception;
     List<Visits> getAll(Map<String, String> query);
     Visits getById(String patientId) throws Exception;
-    Visits update(String id, VisitsUpdateDTO payload) throws Exception;
     void delete(String id) throws Exception;
-
+    Visits update(String id, VisitsUpdateDTO payload) throws Exception;
     Map<String, String> getFilters(HttpServletRequest request);
 }

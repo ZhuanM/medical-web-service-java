@@ -16,9 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLOutput;
-import java.util.Objects;
-
 @Lazy
 @Service
 @Transactional
@@ -30,15 +27,11 @@ public class AuthService {
     @Autowired
     private DoctorService doctorService;
 
-    public JWTResponse authenticate(
-            JWTRequest jwtRequest,
-            JWTUtility jwtUtility,
-            AuthenticationManager authenticationManager
-    ) throws Exception {
+    public JWTResponse authenticate(JWTRequest jwtRequest, JWTUtility jwtUtility, AuthenticationManager authenticationManager) throws Exception {
         AppUser user;
+
         try {
             user = appUserService.findUserByUsername(jwtRequest.getUsername());
-            System.out.println(user);
         } catch (UsernameNotFoundException e) {
             throw new Exception("Invalid Credentials!", e);
         }
@@ -57,6 +50,7 @@ public class AuthService {
         } catch (BadCredentialsException e) {
             throw new Exception("Invalid Credentials!", e);
         }
+
         final UserDetails userDetails = this.appUserService.loadUserByUsername(jwtRequest.getUsername());
         final String token = jwtUtility.generateToken(userDetails);
 
